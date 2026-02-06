@@ -1,0 +1,41 @@
+# Dependencies
+node_modules
+
+# Build output
+.next
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files (should be set in Docker/Coolify)
+.env
+.env.*
+!.env.example
+
+# Test files
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# Misc
+*.log
+npm-debug.log*
