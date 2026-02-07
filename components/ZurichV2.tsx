@@ -1460,8 +1460,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               letterSpacing: '0.2em',
               color: '#4A90D9',
               marginBottom: 16,
-            }}>
-              WE BUILT THIS
+            }} data-section="liquorChat" data-field="sectionLabel">
+              {content.liquorChat.sectionLabel}
             </div>
             {/* LiquorChat Logo + Full POS Integration Badge */}
             <div style={{
@@ -1503,8 +1503,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   fontWeight: 600,
                   letterSpacing: '0.05em',
                   color: '#4A90D9',
-                }}>
-                  FULL POS INTEGRATION
+                }} data-section="liquorChat" data-field="posBadge">
+                  {content.liquorChat.posBadge}
                 </span>
               </div>
             </div>
@@ -1514,8 +1514,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               color: '#FDFDFC',
               letterSpacing: '-0.02em',
               marginBottom: 24,
-            }}>
-              The Industry&apos;s Most Advanced AI Platform
+            }} data-section="liquorChat" data-field="headline">
+              {content.liquorChat.headline}
             </h2>
             <p style={{
               fontSize: 16,
@@ -1531,11 +1531,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               gap: 24,
               marginBottom: 32,
             }}>
-              {[
-                { num: '3', label: 'Patents Pending', desc: 'Proprietary technology' },
-                { num: '24/7', label: 'AI Employee', desc: 'Always working for you' },
-                { num: 'Full', label: 'POS Integration', desc: 'Real-time inventory' },
-              ].map((item, i) => (
+              {content.liquorChat.features.map((item, i) => (
                 <div key={i} style={{
                   background: 'rgba(74, 144, 217, 0.1)',
                   borderRadius: 12,

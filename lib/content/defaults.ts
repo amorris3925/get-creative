@@ -59,6 +59,13 @@ export interface DefaultContent {
     client: string;
     desc: string;
   }>;
+  liquorChat: {
+    sectionLabel: string;
+    headline: string;
+    description: string;
+    posBadge: string;
+    features: Array<{ num: string; label: string; desc: string }>;
+  };
   cityHive: {
     title: string;
     description: string;
@@ -328,6 +335,18 @@ export const defaultContent: DefaultContent = {
     { metric: '+47%', label: 'Foot Traffic', client: 'Urban Wine Shop', desc: 'Precision geofencing during off-peak hours drove measurable in-store visits' },
     { metric: '+89%', label: 'Online Orders', client: 'Suburban Liquor Store', desc: 'City Hive optimization combined with Google Ads campaign' },
   ],
+
+  liquorChat: {
+    sectionLabel: 'WE BUILT THIS',
+    headline: "The Industry's Most Advanced AI Platform",
+    description: "LiquorChat is the most dynamic AI solution in beverage retail—and it's available to all of our partners. We built it from a decade of industry experience, and it's now helping customers and employees find products faster and feel more confident on the floor. With 3 patents pending and full POS integration, it works like an AI employee that never sleeps—driving sales 24/7.",
+    posBadge: 'FULL POS INTEGRATION',
+    features: [
+      { num: '3', label: 'Patents Pending', desc: 'Proprietary technology' },
+      { num: '24/7', label: 'AI Employee', desc: 'Always working for you' },
+      { num: 'Full', label: 'POS Integration', desc: 'Real-time inventory' },
+    ],
+  },
 
   cityHive: {
     title: 'FEATURED PARTNERSHIP',
