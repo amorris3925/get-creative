@@ -139,6 +139,60 @@ export interface DefaultContent {
     };
     stickyCta: string;
   };
+  sectionLabels: {
+    caseStudies: { retail: string; enterprise: string };
+    caseStudiesHeading: { retail: string; enterprise: { prefix: string; highlight: string } };
+    caseStudiesDesc: string;
+    services: string;
+    servicesHeading: string;
+    servicesDesc: string;
+    roiCalculator: string;
+    roiHeading: string;
+    alwaysIncluded: string;
+    chooseServices: string;
+    adHocDesign: { label: string; price: string };
+    pricing: string;
+    pricingHeading: string;
+    pricingSubheading: string;
+    mostPopular: string;
+    viewDetails: { show: string; hide: string };
+    difference: string;
+    differenceHeading: string;
+    differenceDesc: string;
+    wrongFit: string;
+    rightFit: string;
+    typicalAgencyLabel: string;
+    about: string;
+    aboutHeading: string;
+    aboutDesc: string;
+    directAccessTitle: string;
+    video: { label: string; heading: string; desc: string };
+  };
+  enterprisePricing: {
+    badge: string;
+    heading: string;
+    description: string;
+    investmentLabel: string;
+    price: number;
+    priceDisplay: string;
+    perMonth: string;
+    term: string;
+    cta: string;
+    founderName: string;
+    founderExperience: string;
+  };
+  footer: {
+    bio: string;
+    sections: Array<{ label: string; links: Array<{ label: string; href: string }> }>;
+    copyright: string;
+  };
+  uiText: {
+    watchStory: string;
+    scheduleCall: string;
+    getStarted: string;
+    learnMore: string;
+    viewAllServices: string;
+  };
 }
 
 export const defaultContent: DefaultContent = {
@@ -477,6 +531,84 @@ export const defaultContent: DefaultContent = {
       enterprise: 'Enterprise: Chains / Distributor / Producer',
     },
     stickyCta: 'Free Audit',
+  },
+
+  sectionLabels: {
+    caseStudies: {
+      retail: 'LIQUOR RETAIL CASE STUDIES',
+      enterprise: 'ENTERPRISE & CHAIN SERVICES',
+    },
+    caseStudiesHeading: {
+      retail: 'Measurable results',
+      enterprise: { prefix: 'Marketing for ', highlight: 'scale' },
+    },
+    caseStudiesDesc: "Whether you have one location or fifty, or you're a major distributor—everything is centralized and managed by a dedicated account executive working alongside Alden Morris. Enterprise partners get custom GTM strategy, full creative services, and hands-on execution.",
+    services: 'SERVICES FOR BEVERAGE RETAIL',
+    servicesHeading: 'Done-for-you marketing',
+    servicesDesc: 'Everything you need to dominate your local market, managed by specialists who understand the beverage retail industry.',
+    roiCalculator: 'BUILD YOUR SERVICE PACKAGE',
+    roiHeading: 'ROI Calculator',
+    alwaysIncluded: 'ALWAYS INCLUDED',
+    chooseServices: 'CHOOSE 3 SERVICES',
+    adHocDesign: { label: 'Ad-Hoc Design Requests', price: 'Custom projects each month +$1,000/mo' },
+    pricing: 'PARTNERSHIP TIERS',
+    pricingHeading: 'Choose your level of partnership',
+    pricingSubheading: 'All tiers require a 6-month commitment',
+    mostPopular: 'MOST POPULAR',
+    viewDetails: { show: '+ View all services', hide: '− Hide details' },
+    difference: 'THE DIFFERENCE',
+    differenceHeading: 'Typical Agency vs Intentionally Creative',
+    differenceDesc: "We're not another generalist agency. We built our entire practice around beverage retail success.",
+    wrongFit: 'WRONG FIT',
+    rightFit: 'RIGHT FIT',
+    typicalAgencyLabel: 'TYPICAL AGENCY',
+    about: 'ABOUT THE FOUNDER',
+    aboutHeading: 'You work directly with Alden Morris',
+    aboutDesc: "Not a junior team. Not an account manager. When you work with Intentionally Creative, you get direct access to a founder who has spent 10+ years in the beverage industry—from producer to distributor to retail.",
+    directAccessTitle: 'THE DIRECT ACCESS PROMISE',
+    video: {
+      label: 'AS SEEN ON YOUTUBE & SOCIAL MEDIA',
+      heading: 'Your Questions, Answered',
+      desc: 'We cover the topics liquor store owners ask about most—from marketing strategy to industry trends.',
+    },
+  },
+
+  enterprisePricing: {
+    badge: 'ENTERPRISE PARTNERSHIP',
+    heading: 'Strategic Growth Partnership',
+    description: 'Full-service partnership with direct access to our founder and executive team.',
+    investmentLabel: 'INVESTMENT',
+    price: 10000,
+    priceDisplay: '$10,000',
+    perMonth: '/month',
+    term: '12-month partnership • Custom onboarding',
+    cta: 'Schedule Strategy Call',
+    founderName: 'Alden Morris, Founder',
+    founderExperience: '10+ years beverage marketing',
+  },
+
+  footer: {
+    bio: 'Premier digital marketing agency for the retail liquor industry. 10+ years of 3-tier expertise.',
+    sections: [
+      {
+        label: 'COMPANY',
+        links: [
+          { label: 'About', href: '#about-section' },
+          { label: 'Case Studies', href: '#results-section' },
+          { label: 'Contact', href: '#contact-section' },
+          { label: 'Blog', href: '/blog' },
+        ],
+      },
+    ],
+    copyright: '© 2024 Intentionally Creative. All rights reserved.',
+  },
+
+  uiText: {
+    watchStory: 'WATCH STORY',
+    scheduleCall: 'Schedule Call',
+    getStarted: 'Get Started',
+    learnMore: 'Learn More',
+    viewAllServices: 'View All Services',
   },
 };
 

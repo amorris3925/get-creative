@@ -402,8 +402,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
               }}
+              data-section="navigation"
+              data-field="clientTypes.retail"
             >
-              Liquor Retail
+              {content.navigation.clientTypes.retail}
             </button>
             <button
               onClick={() => setClientType('enterprise')}
@@ -422,8 +424,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
               }}
+              data-section="navigation"
+              data-field="clientTypes.enterprise"
             >
-              Enterprise: Chains / Distributor / Producer
+              {content.navigation.clientTypes.enterprise}
             </button>
           </div>
           <div style={{
@@ -433,12 +437,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
             flexShrink: 0,
           }} />
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
-            {[
-              { label: 'Services', id: 'services-section' },
-              { label: 'Results', id: 'results-section' },
-              { label: 'About', id: 'about-section' },
-              { label: 'Contact', id: 'contact-section' },
-            ].map(item => (
+            {content.navigation.items.map((item, i) => (
               <span
                 key={item.label}
                 onClick={() => {
@@ -454,6 +453,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   borderRadius: 100,
                   transition: 'background 0.2s ease',
                 }}
+                data-section="navigation"
+                data-field={`items.${i}.label`}
               >
                 {item.label}
               </span>
@@ -476,8 +477,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   animation: 'slideIn 0.3s ease forwards',
                   flexShrink: 0,
                 }}
+                data-section="navigation"
+                data-field="stickyCta"
               >
-                Free Audit
+                {content.navigation.stickyCta}
               </button>
             )}
           </div>

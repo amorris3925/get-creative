@@ -24,10 +24,11 @@ export default async function SectionsListPage() {
   // Group sections by category
   const sectionCategories = {
     'Core Page Sections': ['hero', 'services', 'stats', 'caseStudies', 'testimonials'],
-    'Pricing & Features': ['pricing', 'enterpriseServices', 'growthPartnerPoints'],
+    'Pricing & Features': ['pricing', 'enterpriseServices', 'growthPartnerPoints', 'enterprisePricing'],
     'About & Contact': ['about', 'contact', 'comparison'],
     'Products & Partners': ['liquorChat', 'cityHive'],
-    'Navigation & Other': ['navigation', 'clientTypes'],
+    'Navigation & Layout': ['navigation', 'sectionLabels', 'footer', 'uiText'],
+    'Other': ['clientTypes'],
   };
 
   return (
