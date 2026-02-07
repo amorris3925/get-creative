@@ -26,7 +26,8 @@ export default async function SectionsListPage() {
     'Core Page Sections': ['hero', 'services', 'stats', 'caseStudies', 'testimonials'],
     'Pricing & Features': ['pricing', 'enterpriseServices', 'growthPartnerPoints'],
     'About & Contact': ['about', 'contact', 'comparison'],
-    'Navigation & Other': ['navigation', 'clientTypes', 'cityHive'],
+    'Products & Partners': ['liquorChat', 'cityHive'],
+    'Navigation & Other': ['navigation', 'clientTypes'],
   };
 
   return (
