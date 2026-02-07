@@ -2,6 +2,7 @@
 
 import { EditModeProvider } from './EditModeContext';
 import AdminToolbar from './AdminToolbar';
+import GlobalEditableOverlay from './GlobalEditableOverlay';
 
 interface EditableWrapperProps {
   children: React.ReactNode;
@@ -12,7 +13,12 @@ export default function EditableWrapper({ children, isAdmin }: EditableWrapperPr
   return (
     <EditModeProvider isAdmin={isAdmin}>
       {children}
-      {isAdmin && <AdminToolbar />}
+      {isAdmin && (
+        <>
+          <GlobalEditableOverlay />
+          <AdminToolbar />
+        </>
+      )}
     </EditModeProvider>
   );
 }
