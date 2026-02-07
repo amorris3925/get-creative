@@ -8,6 +8,7 @@ export interface SectionContent {
 export interface DefaultContent {
   hero: {
     industryBadge: string;
+    industryLeading: string;
     yearsExperience: number;
     yearsLabel: string;
     tiers: Array<{ tier: string; name: string; desc: string; color: string }>;
@@ -136,6 +137,7 @@ export interface DefaultContent {
 export const defaultContent: DefaultContent = {
   hero: {
     industryBadge: 'ALCOHOLIC BEVERAGE INDUSTRY ONLY',
+    industryLeading: "THE INDUSTRY'S LEADING",
     yearsExperience: 10,
     yearsLabel: 'YEARS IN THE 3-TIER ALC-BEV INDUSTRY',
     tiers: [

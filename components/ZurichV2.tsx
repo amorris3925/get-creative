@@ -38,12 +38,13 @@ export default function ZurichV2({ content }: ZurichV2Props) {
         const rect = statsRef.current.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.8) {
           setHasAnimated(true);
-          // Animate from 0 to 10
+          // Animate from 0 to yearsExperience
+          const targetCount = content.hero.yearsExperience;
           let count = 0;
           const interval = setInterval(() => {
             count += 1;
             setYearsCount(count);
-            if (count >= 10) clearInterval(interval);
+            if (count >= targetCount) clearInterval(interval);
           }, 80);
         }
       }
@@ -526,8 +527,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 fontWeight: 600,
                 letterSpacing: '0.1em',
                 color: '#ED7F35',
-              }}>
-                ALCOHOLIC BEVERAGE INDUSTRY ONLY
+              }} data-section="hero" data-field="industryBadge">
+                {content.hero.industryBadge}
               </span>
             </div>
 
@@ -551,8 +552,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               marginTop: 24,
               fontWeight: 500,
               color: '#0A0A0A',
-            }}>
-              YEARS IN THE 3-TIER ALC-BEV INDUSTRY
+            }} data-section="hero" data-field="yearsLabel">
+              {content.hero.yearsLabel}
             </div>
 
             {/* 3-Tier Indicators */}
@@ -561,11 +562,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               gap: 40,
               marginTop: 48,
             }}>
-              {[
-                { tier: 'Tier 1', name: 'Producer', desc: 'Breweries, Distilleries, Wineries', color: '#ED7F35' },
-                { tier: 'Tier 2', name: 'Distributor', desc: 'Wholesale & Distribution', color: '#F93830' },
-                { tier: 'Tier 3', name: 'Retail', desc: 'Liquor Stores & Chains', color: '#ED7F35' },
-              ].map((item, i) => (
+              {content.hero.tiers.map((item, i) => (
                 <div key={i} style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -625,8 +622,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 background: 'rgba(139, 36, 199, 0.08)',
                 borderRadius: 100,
                 border: '1px solid rgba(139, 36, 199, 0.2)',
-              }}>
-                THE INDUSTRY&apos;S LEADING
+              }} data-section="hero" data-field="industryLeading">
+                {content.hero.industryLeading}
               </span>
             </div>
             <h1 className="hero-animate hero-animate-delay-2" style={{
@@ -693,8 +690,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 borderRadius: 8,
                 cursor: 'pointer',
                 boxShadow: '0 4px 16px rgba(237, 127, 53, 0.25)',
-              }}>
-                GET FREE AUDIT
+              }} data-section="hero" data-field="ctaPrimary">
+                {content.hero.ctaPrimary}
               </button>
               <button style={{
                 background: 'rgba(237, 127, 53, 0.12)',
@@ -706,8 +703,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 letterSpacing: '0.05em',
                 borderRadius: 8,
                 cursor: 'pointer',
-              }}>
-                View Case Studies
+              }} data-section="hero" data-field="ctaSecondary">
+                {content.hero.ctaSecondary}
               </button>
             </div>
           </div>
@@ -2431,11 +2428,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
             borderTop: '1px solid rgba(255,255,255,0.1)',
             borderBottom: '1px solid rgba(255,255,255,0.1)',
           }}>
-            {[
-              { stat: '10+', label: 'Years in beverage', sublabel: 'Producer, distributor & retail' },
-              { stat: '107', label: 'Retail partners', sublabel: 'And growing every month' },
-              { stat: '312%', label: 'Average ROI', sublabel: 'Across our client base' },
-            ].map((item, i) => (
+            {content.stats.items.map((item, i) => (
               <div key={i} style={{ textAlign: 'center' }}>
                 <div style={{
                   fontSize: 48,
@@ -2744,23 +2737,23 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 fontSize: 32,
                 fontWeight: 400,
                 marginBottom: 8,
-              }}>
-                Alden Morris
+              }} data-section="about" data-field="founderName">
+                {content.about.founderName}
               </h3>
               <div style={{
                 fontSize: 14,
                 color: '#ED7F35',
                 letterSpacing: '0.05em',
                 marginBottom: 24,
-              }}>
-                Founder & Principal Strategist
+              }} data-section="about" data-field="founderTitle">
+                {content.about.founderTitle}
               </div>
               <p style={{
                 fontSize: 15,
                 lineHeight: 1.8,
                 color: '#666',
-              }}>
-                Alden brings over ten years of experience across the U.S. beverage industry&apos;s supplier, distributor, and retail tiers. He has led marketing efforts for national brands and worked directly with independent retailers and producers, building a practical understanding of how to grow beverage businesses across different markets.
+              }} data-section="about" data-field="founderBio">
+                {content.about.founderBio}
               </p>
             </div>
 
@@ -2787,24 +2780,19 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   color: '#FFFFFF',
                   marginBottom: 24,
                   lineHeight: 1.3,
-                }}>
-                  You don&apos;t get pawned off to a junior team
+                }} data-section="about" data-field="directAccessPromise.title">
+                  {content.about.directAccessPromise.title}
                 </h4>
                 <p style={{
                   fontSize: 15,
                   lineHeight: 1.8,
                   color: 'rgba(255,255,255,0.7)',
                   marginBottom: 32,
-                }}>
-                  Every one of our case studies points to the same thing: clients succeed because Alden is directly involved in their strategy, their projects, and their growth. This isn&apos;t a bait-and-switch agency where you sign with the founder and then never see them again.
+                }} data-section="about" data-field="directAccessPromise.description">
+                  {content.about.directAccessPromise.description}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                  {[
-                    'Alden personally reviews every campaign strategy',
-                    'Direct Slack/phone access to discuss your business',
-                    'Monthly strategy sessions with the founder',
-                    'He knows your store, your market, your customers',
-                  ].map((point, i) => (
+                  {content.about.directAccessPromise.points.map((point, i) => (
                     <div key={i} style={{
                       display: 'flex',
                       alignItems: 'center',
