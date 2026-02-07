@@ -44,6 +44,20 @@ export default function GlobalEditableOverlay() {
     };
   }, []);
 
+  // Check if element has proper data attributes for CMS editing
+  const hasEditableDataAttributes = useCallback((element: HTMLElement): boolean => {
+    let current: HTMLElement | null = element;
+    while (current) {
+      const sectionKey = current.dataset.section;
+      const fieldPath = current.dataset.field;
+      if (sectionKey && fieldPath) {
+        return true;
+      }
+      current = current.parentElement;
+    }
+    return false;
+  }, []);
+
   // Check if element is editable text
   const isEditableElement = useCallback((element: HTMLElement): boolean => {
     if (!element) return false;
@@ -59,6 +73,12 @@ export default function GlobalEditableOverlay() {
       return false;
     }
 
+    // IMPORTANT: Only allow editing elements with proper data-section and data-field attributes
+    // This ensures the change can be saved to the CMS
+    if (!hasEditableDataAttributes(element)) {
+      return false;
+    }
+
     // Check if it contains only text (no interactive children)
     const hasOnlyText = element.childElementCount === 0 ||
       Array.from(element.children).every(child =>
@@ -69,11 +89,8 @@ export default function GlobalEditableOverlay() {
     const text = element.textContent?.trim();
     if (!text || text.length === 0) return false;
 
-    // Skip very long text (likely paragraphs that should use textarea)
-    // But allow them anyway for editing
-
     return hasOnlyText;
-  }, []);
+  }, [hasEditableDataAttributes]);
 
   // Handle click on editable element
   const handleClick = useCallback((e: MouseEvent) => {

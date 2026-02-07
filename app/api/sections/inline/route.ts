@@ -18,6 +18,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }
 
+    // Reject unknown section keys - element must have proper data attributes
+    if (sectionKey === 'unknown' || !defaultContent[sectionKey as keyof typeof defaultContent]) {
+      console.warn(`Attempted to save unknown section: ${sectionKey}`);
+      return NextResponse.json({
+        error: 'Element not configured for editing. Please add data-section and data-field attributes.',
+        sectionKey
+      }, { status: 400 });
+    }
+
     const supabase = await createClient();
 
     // Get existing section data
