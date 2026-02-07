@@ -101,12 +101,38 @@ export default function GlobalEditableOverlay() {
       target.contentEditable = 'true';
       target.focus();
 
-      // Select all text
-      const range = document.createRange();
-      range.selectNodeContents(target);
+      // Place cursor at click position instead of selecting all text
+      // This allows users to edit specific parts of the text
       const sel = window.getSelection();
-      sel?.removeAllRanges();
-      sel?.addRange(range);
+      if (sel && e.clientX && e.clientY) {
+        // Try to place cursor at click position using caretPositionFromPoint or caretRangeFromPoint
+        let range: Range | null = null;
+
+        if (document.caretRangeFromPoint) {
+          // Chrome, Safari, Edge
+          range = document.caretRangeFromPoint(e.clientX, e.clientY);
+        } else if ((document as unknown as { caretPositionFromPoint: (x: number, y: number) => { offsetNode: Node; offset: number } | null }).caretPositionFromPoint) {
+          // Firefox
+          const pos = (document as unknown as { caretPositionFromPoint: (x: number, y: number) => { offsetNode: Node; offset: number } | null }).caretPositionFromPoint(e.clientX, e.clientY);
+          if (pos) {
+            range = document.createRange();
+            range.setStart(pos.offsetNode, pos.offset);
+            range.collapse(true);
+          }
+        }
+
+        if (range) {
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } else {
+          // Fallback: place cursor at end
+          const fallbackRange = document.createRange();
+          fallbackRange.selectNodeContents(target);
+          fallbackRange.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(fallbackRange);
+        }
+      }
 
       // Style the editing element
       target.style.outline = '2px solid #ED7F35';
@@ -130,7 +156,7 @@ export default function GlobalEditableOverlay() {
 
     // Save if changed
     if (newText !== editing.originalText && addChange) {
-      addChange(editing.sectionKey, editing.path, newText);
+      addChange(editing.sectionKey, editing.path, newText, editing.originalText);
     }
 
     setEditing(null);

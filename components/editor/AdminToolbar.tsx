@@ -2,9 +2,33 @@
 
 import { useEditMode } from './EditModeContext';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function AdminToolbar() {
-  const { isEditMode, toggleEditMode, saveChanges, discardChanges, isSaving, hasChanges } = useEditMode();
+  const {
+    isEditMode,
+    toggleEditMode,
+    saveChanges,
+    discardChanges,
+    isSaving,
+    hasChanges,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+    showHistory,
+    setShowHistory,
+    history,
+    fetchHistory,
+    rollbackTo,
+  } = useEditMode();
+
+  // Fetch history when panel opens
+  useEffect(() => {
+    if (showHistory) {
+      fetchHistory();
+    }
+  }, [showHistory, fetchHistory]);
 
   return (
     <>
@@ -12,6 +36,7 @@ export default function AdminToolbar() {
       {!isEditMode && (
         <button
           onClick={toggleEditMode}
+          data-admin-toolbar
           style={{
             position: 'fixed',
             bottom: 24,
@@ -51,6 +76,7 @@ export default function AdminToolbar() {
       {/* Full Toolbar (when in edit mode) */}
       {isEditMode && (
         <div
+          data-admin-toolbar
           style={{
             position: 'fixed',
             bottom: 24,
@@ -88,9 +114,60 @@ export default function AdminToolbar() {
             </span>
           </div>
 
+          {/* Undo/Redo Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: 4,
+            paddingRight: 12,
+            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+          }}>
+            <button
+              onClick={undo}
+              disabled={!canUndo}
+              title="Undo (Cmd+Z)"
+              style={{
+                padding: '6px 8px',
+                background: canUndo ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                border: 'none',
+                borderRadius: 6,
+                color: canUndo ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.2)',
+                cursor: canUndo ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 7v6h6" />
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+              </svg>
+            </button>
+            <button
+              onClick={redo}
+              disabled={!canRedo}
+              title="Redo (Cmd+Shift+Z)"
+              style={{
+                padding: '6px 8px',
+                background: canRedo ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                border: 'none',
+                borderRadius: 6,
+                color: canRedo ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.2)',
+                cursor: canRedo ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 7v6h-6" />
+                <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
+              </svg>
+            </button>
+          </div>
+
           {/* Instructions */}
           <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.5)' }}>
-            Click any text to edit
+            Click text to edit
           </span>
 
           {/* Pending Changes Indicator */}
@@ -108,6 +185,30 @@ export default function AdminToolbar() {
 
           {/* Action Buttons */}
           <div style={{ display: 'flex', gap: 8, marginLeft: 8 }}>
+            {/* History Button */}
+            <button
+              onClick={() => setShowHistory(!showHistory)}
+              title="View change history"
+              style={{
+                padding: '8px 12px',
+                background: showHistory ? 'rgba(139, 36, 199, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                border: showHistory ? '1px solid rgba(139, 36, 199, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: 8,
+                color: showHistory ? '#A855F7' : 'rgba(255, 255, 255, 0.7)',
+                fontSize: 12,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              History
+            </button>
+
             <Link
               href="/admin/sections"
               style={{
@@ -172,6 +273,170 @@ export default function AdminToolbar() {
             >
               Exit
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* History Panel */}
+      {isEditMode && showHistory && (
+        <div
+          data-admin-toolbar
+          style={{
+            position: 'fixed',
+            bottom: 100,
+            right: 24,
+            zIndex: 9998,
+            width: 360,
+            maxHeight: 400,
+            background: 'rgba(10, 10, 10, 0.98)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: 16,
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+            overflow: 'hidden',
+          }}
+        >
+          <div style={{
+            padding: '16px 20px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A855F7" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span style={{ color: '#FFFFFF', fontSize: 14, fontWeight: 600 }}>
+                Change History
+              </span>
+            </div>
+            <button
+              onClick={() => setShowHistory(false)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                padding: 4,
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div style={{
+            maxHeight: 320,
+            overflowY: 'auto',
+            padding: '8px 0',
+          }}>
+            {history.length === 0 ? (
+              <div style={{
+                padding: '24px 20px',
+                textAlign: 'center',
+                color: 'rgba(255, 255, 255, 0.4)',
+                fontSize: 13,
+              }}>
+                No change history yet.
+                <br />
+                <span style={{ fontSize: 11 }}>Changes will appear here after saving.</span>
+              </div>
+            ) : (
+              history.map((entry, i) => (
+                <div
+                  key={entry.id || i}
+                  style={{
+                    padding: '12px 20px',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6,
+                  }}
+                >
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                    <span style={{
+                      fontSize: 11,
+                      color: '#ED7F35',
+                      fontWeight: 500,
+                      letterSpacing: '0.05em',
+                    }}>
+                      {entry.sectionKey.toUpperCase()}
+                    </span>
+                    <span style={{
+                      fontSize: 10,
+                      color: 'rgba(255, 255, 255, 0.3)',
+                    }}>
+                      {new Date(entry.timestamp).toLocaleString()}
+                    </span>
+                  </div>
+                  <div style={{
+                    fontSize: 12,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                  }}>
+                    <span style={{
+                      padding: '2px 6px',
+                      background: 'rgba(255, 100, 100, 0.15)',
+                      borderRadius: 4,
+                      fontSize: 10,
+                      color: '#FF6B6B',
+                      textDecoration: 'line-through',
+                      maxWidth: 120,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}>
+                      {entry.previousValue?.slice(0, 20) || '(empty)'}
+                    </span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    <span style={{
+                      padding: '2px 6px',
+                      background: 'rgba(100, 255, 100, 0.15)',
+                      borderRadius: 4,
+                      fontSize: 10,
+                      color: '#6BFF6B',
+                      maxWidth: 120,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}>
+                      {entry.newValue?.slice(0, 20) || '(empty)'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (confirm('Are you sure you want to revert to this version?')) {
+                        rollbackTo(entry.id);
+                      }
+                    }}
+                    style={{
+                      marginTop: 4,
+                      padding: '4px 8px',
+                      background: 'rgba(139, 36, 199, 0.1)',
+                      border: '1px solid rgba(139, 36, 199, 0.3)',
+                      borderRadius: 4,
+                      color: '#A855F7',
+                      fontSize: 10,
+                      cursor: 'pointer',
+                      alignSelf: 'flex-start',
+                    }}
+                  >
+                    Revert to this
+                  </button>
+                </div>
+              ))
+            )}
           </div>
         </div>
       )}
