@@ -192,6 +192,14 @@ export interface DefaultContent {
     getStarted: string;
     learnMore: string;
     viewAllServices: string;
+    scheduleFounderCall: string;
+    viewEnterpriseCases: string;
+    getFreeAudit: string;
+  };
+  socialProof: {
+    sectionLabel: string;
+    heading: string;
+    desc: string;
   };
 }
 
@@ -609,6 +617,14 @@ export const defaultContent: DefaultContent = {
     getStarted: 'Get Started',
     learnMore: 'Learn More',
     viewAllServices: 'View All Services',
+    scheduleFounderCall: 'SCHEDULE FOUNDER CALL',
+    viewEnterpriseCases: 'View Enterprise Case Studies',
+    getFreeAudit: 'GET FREE AUDIT',
+  },
+  socialProof: {
+    sectionLabel: 'AS SEEN ON YOUTUBE & SOCIAL MEDIA',
+    heading: 'Featured in industry-leading channels',
+    desc: 'Our strategies and insights have been featured across major beverage industry publications and social platforms.',
   },
 };
 

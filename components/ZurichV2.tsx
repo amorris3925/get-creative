@@ -781,17 +781,23 @@ export default function ZurichV2({ content }: ZurichV2Props) {
             color: clientType === 'retail' ? '#ED7F35' : '#8B24C7',
             marginBottom: 16,
             transition: 'color 0.3s ease',
-          }}>
-            {clientType === 'retail' ? 'LIQUOR RETAIL CASE STUDIES' : 'ENTERPRISE & CHAIN SERVICES'}
+          }}
+            data-section="sectionLabels"
+            data-field={`caseStudies.${clientType}`}
+          >
+            {clientType === 'retail' ? content.sectionLabels.caseStudies.retail : content.sectionLabels.caseStudies.enterprise}
           </div>
           <h2 className="reveal animate-delay-100" style={{
             fontSize: 48,
             fontWeight: 300,
             letterSpacing: '-0.02em',
             marginBottom: 64,
-          }}>
-            {clientType === 'retail' ? 'Measurable results' : (
-              <>Marketing for <span style={{ color: '#8B24C7' }}>scale</span></>
+          }}
+            data-section="sectionLabels"
+            data-field={`caseStudiesHeading.${clientType}`}
+          >
+            {clientType === 'retail' ? content.sectionLabels.caseStudiesHeading.retail : (
+              <>{content.sectionLabels.caseStudiesHeading.enterprise.prefix}<span style={{ color: '#8B24C7' }}>{content.sectionLabels.caseStudiesHeading.enterprise.highlight}</span></>
             )}
           </h2>
 
@@ -803,8 +809,11 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               maxWidth: 800,
               marginBottom: 64,
               marginTop: -32,
-            }}>
-              Whether you have one location or fifty, or you&apos;re a major distributor—everything is centralized and managed by a <strong>dedicated account executive</strong> working alongside <strong>Alden Morris</strong>. Enterprise partners get <strong>custom GTM strategy</strong>, full creative services, and <strong>hands-on execution</strong>.
+            }}
+              data-section="sectionLabels"
+              data-field="caseStudiesDesc"
+            >
+              {content.sectionLabels.caseStudiesDesc}
             </p>
           )}
 
@@ -1390,16 +1399,16 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 letterSpacing: '0.2em',
                 color: '#ED7F35',
                 marginBottom: 16,
-              }}>
-                SERVICES FOR BEVERAGE RETAIL
+              }} data-section="sectionLabels" data-field="services">
+                {content.sectionLabels.services}
               </div>
               <h2 style={{
                 fontSize: 48,
                 fontWeight: 300,
                 color: '#FDFDFC',
                 letterSpacing: '-0.02em',
-              }}>
-                Done-for-you marketing
+              }} data-section="sectionLabels" data-field="servicesHeading">
+                {content.sectionLabels.servicesHeading}
               </h2>
             </div>
             <p style={{
@@ -1407,8 +1416,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               lineHeight: 1.7,
               color: 'rgba(255,255,255,0.6)',
               maxWidth: 400,
-            }}>
-              Comprehensive digital marketing services designed specifically for liquor stores, wine shops, and beverage retailers.
+            }} data-section="sectionLabels" data-field="servicesDesc">
+              {content.sectionLabels.servicesDesc}
             </p>
           </div>
 
@@ -1657,11 +1666,11 @@ export default function ZurichV2({ content }: ZurichV2Props) {
           {clientType === 'retail' && (
           <div style={{ marginBottom: 80 }}>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: 40 }}>
-              <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#ED7F35', marginBottom: 12 }}>
-                BUILD YOUR SERVICE PACKAGE
+              <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#ED7F35', marginBottom: 12 }} data-section="sectionLabels" data-field="roiCalculator">
+                {content.sectionLabels.roiCalculator}
               </div>
-              <h2 style={{ fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 300, letterSpacing: '-0.02em' }}>
-                ROI Calculator
+              <h2 style={{ fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 300, letterSpacing: '-0.02em' }} data-section="sectionLabels" data-field="roiHeading">
+                {content.sectionLabels.roiHeading}
               </h2>
             </div>
 
@@ -1691,7 +1700,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                     gap: 8,
                   }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
-                    ALWAYS INCLUDED
+                    <span data-section="sectionLabels" data-field="alwaysIncluded">{content.sectionLabels.alwaysIncluded}</span>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                     {lockedServices.map((service, idx) => (
@@ -2005,13 +2014,13 @@ export default function ZurichV2({ content }: ZurichV2Props) {
           {clientType === 'retail' ? (
           <div>
             <div className="reveal" style={{ textAlign: 'center', marginBottom: 48 }}>
-              <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#ED7F35', marginBottom: 12 }}>
-                PARTNERSHIP TIERS
+              <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#ED7F35', marginBottom: 12 }} data-section="sectionLabels" data-field="pricing">
+                {content.sectionLabels.pricing}
               </div>
-              <h2 style={{ fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 300, letterSpacing: '-0.02em', marginBottom: 8 }}>
-                Choose your level of partnership
+              <h2 style={{ fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 300, letterSpacing: '-0.02em', marginBottom: 8 }} data-section="sectionLabels" data-field="pricingHeading">
+                {content.sectionLabels.pricingHeading}
               </h2>
-              <p style={{ fontSize: 14, color: '#666' }}>All tiers require a 6-month commitment</p>
+              <p style={{ fontSize: 14, color: '#666' }} data-section="sectionLabels" data-field="pricingSubheading">{content.sectionLabels.pricingSubheading}</p>
             </div>
 
             <div className="stagger-children" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
@@ -2253,7 +2262,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
                 {/* Left: Pricing Info */}
                 <div>
-                  <div style={{
+                  <div
+                  data-section="enterprisePricing"
+                  data-field="badge"
+                  style={{
                     background: 'linear-gradient(135deg, #8B24C7, #6B21A8)',
                     padding: '6px 14px',
                     borderRadius: 100,
@@ -2263,25 +2275,56 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                     color: '#FFF',
                     display: 'inline-block',
                     marginBottom: 20,
-                  }}>
-                    ENTERPRISE PARTNERSHIP
-                  </div>
+                  }}
+                >
+                  {content.enterprisePricing.badge}
+                </div>
 
-                  <h3 style={{ fontSize: 28, fontWeight: 500, color: '#FFF', marginBottom: 12 }}>
-                    Strategic Growth Partnership
+                  <h3
+                    data-section="enterprisePricing"
+                    data-field="heading"
+                    style={{ fontSize: 28, fontWeight: 500, color: '#FFF', marginBottom: 12 }}
+                  >
+                    {content.enterprisePricing.heading}
                   </h3>
-                  <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', marginBottom: 32, lineHeight: 1.7 }}>
-                    Full-service partnership with direct access to our founder and executive team.
+                  <p
+                    data-section="enterprisePricing"
+                    data-field="description"
+                    style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', marginBottom: 32, lineHeight: 1.7 }}
+                  >
+                    {content.enterprisePricing.description}
                   </p>
 
                   <div style={{ marginBottom: 32 }}>
-                    <div style={{ fontSize: 10, letterSpacing: '0.1em', color: '#8B24C7', marginBottom: 8 }}>INVESTMENT</div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                      <span style={{ fontSize: 56, fontWeight: 200, color: '#FFF', letterSpacing: '-0.02em' }}>$10,000</span>
-                      <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)' }}>/month</span>
+                    <div
+                      data-section="enterprisePricing"
+                      data-field="investmentLabel"
+                      style={{ fontSize: 10, letterSpacing: '0.1em', color: '#8B24C7', marginBottom: 8 }}
+                    >
+                      {content.enterprisePricing.investmentLabel}
                     </div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
-                      12-month partnership • Custom onboarding
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                      <span
+                        data-section="enterprisePricing"
+                        data-field="priceDisplay"
+                        style={{ fontSize: 56, fontWeight: 200, color: '#FFF', letterSpacing: '-0.02em' }}
+                      >
+                        {content.enterprisePricing.priceDisplay}
+                      </span>
+                      <span
+                        data-section="enterprisePricing"
+                        data-field="perMonth"
+                        style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)' }}
+                      >
+                        {content.enterprisePricing.perMonth}
+                      </span>
+                    </div>
+                    <div
+                      data-section="enterprisePricing"
+                      data-field="term"
+                      style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}
+                    >
+                      {content.enterprisePricing.term}
                     </div>
                   </div>
 
@@ -2310,8 +2353,20 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                       AM
                     </div>
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: '#FFF' }}>Alden Morris, Founder</div>
-                      <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>10+ years beverage marketing</div>
+                      <div
+                        data-section="enterprisePricing"
+                        data-field="founderName"
+                        style={{ fontSize: 14, fontWeight: 600, color: '#FFF' }}
+                      >
+                        {content.enterprisePricing.founderName}
+                      </div>
+                      <div
+                        data-section="enterprisePricing"
+                        data-field="founderExperience"
+                        style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}
+                      >
+                        {content.enterprisePricing.founderExperience}
+                      </div>
                     </div>
                   </div>
 
@@ -2327,7 +2382,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                     cursor: 'pointer',
                     boxShadow: '0 8px 24px rgba(139, 36, 199, 0.3)',
                   }}>
-                    Schedule Strategy Call
+                    <span data-section="enterprisePricing" data-field="cta">{content.enterprisePricing.cta}</span>
                   </button>
                 </div>
 
@@ -2411,8 +2466,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               letterSpacing: '0.2em',
               color: '#ED7F35',
               marginBottom: 16,
-            }}>
-              THE DIFFERENCE
+            }} data-section="sectionLabels" data-field="difference">
+              {content.sectionLabels.difference}
             </div>
             <h2 style={{
               fontSize: 'clamp(32px, 4vw, 48px)',
@@ -2420,11 +2475,11 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               letterSpacing: '-0.02em',
               color: '#FDFDFC',
               marginBottom: 16,
-            }}>
-              Typical Agency vs <span style={{ color: '#ED7F35' }}>Intentionally Creative</span>
+            }} data-section="sectionLabels" data-field="differenceHeading">
+              {content.sectionLabels.differenceHeading}
             </h2>
-            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', maxWidth: 600, margin: '0 auto' }}>
-              We&apos;re not another generalist agency. We built our entire practice around beverage retail success.
+            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', maxWidth: 600, margin: '0 auto' }} data-section="sectionLabels" data-field="differenceDesc">
+              {content.sectionLabels.differenceDesc}
             </p>
           </div>
 
@@ -2660,13 +2715,17 @@ export default function ZurichV2({ content }: ZurichV2Props) {
             textAlign: 'center',
             marginBottom: 80,
           }}>
-            <div style={{
-              fontSize: 11,
-              letterSpacing: '0.2em',
-              color: '#ED7F35',
-              marginBottom: 16,
-            }}>
-              ABOUT THE FOUNDER
+            <div
+              data-section="sectionLabels"
+              data-field="about"
+              style={{
+                fontSize: 11,
+                letterSpacing: '0.2em',
+                color: '#ED7F35',
+                marginBottom: 16,
+              }}
+            >
+              {content.sectionLabels.about}
             </div>
             <h2 style={{
               fontSize: 'clamp(36px, 5vw, 56px)',
@@ -2675,16 +2734,21 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               marginBottom: 24,
               lineHeight: 1.1,
             }}>
-              You work directly with <span style={{ color: '#ED7F35' }}>Alden Morris</span>
+              <span data-section="sectionLabels" data-field="aboutHeading">{content.sectionLabels.aboutHeading}</span>{' '}
+              <span style={{ color: '#ED7F35' }} data-section="about" data-field="founderName">{content.about.founderName}</span>
             </h2>
-            <p style={{
-              fontSize: 20,
-              lineHeight: 1.7,
-              color: '#666',
-              maxWidth: 800,
-              margin: '0 auto',
-            }}>
-              Not an account manager. Not a junior strategist. When you partner with Intentionally Creative, you work directly with the founder on your strategy, your campaigns, and your growth.
+            <p
+              data-section="sectionLabels"
+              data-field="aboutDesc"
+              style={{
+                fontSize: 20,
+                lineHeight: 1.7,
+                color: '#666',
+                maxWidth: 800,
+                margin: '0 auto',
+              }}
+            >
+              {content.sectionLabels.aboutDesc}
             </p>
           </div>
 
@@ -2932,8 +2996,12 @@ export default function ZurichV2({ content }: ZurichV2Props) {
         }}>
           {clientType === 'enterprise' ? (
             <>
-              <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#8B24C7', marginBottom: 16 }}>
-                LET&apos;S BUILD SOMETHING GREAT
+              <div
+                data-section="contact"
+                data-field="enterprise.sectionLabel"
+                style={{ fontSize: 11, letterSpacing: '0.2em', color: '#8B24C7', marginBottom: 16 }}
+              >
+                {content.contact.enterprise.sectionLabel}
               </div>
               <h2 style={{
                 fontSize: 56,
@@ -2941,7 +3009,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 letterSpacing: '-0.02em',
                 marginBottom: 24,
               }}>
-                Ready to transform your <span style={{
+                <span data-section="contact" data-field="enterprise.headline">{content.contact.enterprise.headline}</span> <span style={{
                   color: '#8B24C7',
                   display: 'inline',
                   opacity: ctaFading ? 0 : 1,
@@ -2969,7 +3037,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   cursor: 'pointer',
                   boxShadow: '0 8px 24px rgba(139, 36, 199, 0.25)',
                 }}>
-                  SCHEDULE FOUNDER CALL
+                  <span data-section="uiText" data-field="scheduleFounderCall">{content.uiText.scheduleFounderCall}</span>
                 </button>
                 <button style={{
                   background: 'transparent',
@@ -2982,27 +3050,42 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   borderRadius: 8,
                   cursor: 'pointer',
                 }}>
-                  View Enterprise Case Studies
+                  <span data-section="uiText" data-field="viewEnterpriseCases">{content.uiText.viewEnterpriseCases}</span>
                 </button>
               </div>
             </>
           ) : (
             <>
-              <h2 style={{
-                fontSize: 56,
-                fontWeight: 200,
-                letterSpacing: '-0.02em',
-                marginBottom: 24,
-              }}>
-                Ready for measurable growth?
+              <div
+                data-section="contact"
+                data-field="retail.sectionLabel"
+                style={{ fontSize: 11, letterSpacing: '0.2em', color: '#ED7F35', marginBottom: 16 }}
+              >
+                {content.contact.retail.sectionLabel}
+              </div>
+              <h2
+                data-section="contact"
+                data-field="retail.headline"
+                style={{
+                  fontSize: 56,
+                  fontWeight: 200,
+                  letterSpacing: '-0.02em',
+                  marginBottom: 24,
+                }}
+              >
+                {content.contact.retail.headline}
               </h2>
-              <p style={{
-                fontSize: 18,
-                lineHeight: 1.7,
-                color: '#666',
-                marginBottom: 48,
-              }}>
-                Get a free marketing audit and discover how we can help your liquor store or beverage business compete and grow.
+              <p
+                data-section="contact"
+                data-field="retail.description"
+                style={{
+                  fontSize: 18,
+                  lineHeight: 1.7,
+                  color: '#666',
+                  marginBottom: 48,
+                }}
+              >
+                {content.contact.retail.description}
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
                 <button style={{
@@ -3016,7 +3099,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   borderRadius: 8,
                   cursor: 'pointer',
                 }}>
-                  GET FREE AUDIT
+                  <span data-section="uiText" data-field="getFreeAudit">{content.uiText.getFreeAudit}</span>
                 </button>
                 <button style={{
                   background: 'transparent',
@@ -3029,7 +3112,7 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   borderRadius: 8,
                   cursor: 'pointer',
                 }}>
-                  Schedule Call
+                  <span data-section="uiText" data-field="scheduleCall">{content.uiText.scheduleCall}</span>
                 </button>
               </div>
             </>
@@ -3047,25 +3130,37 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       }}>
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: 64 }}>
-            <div style={{
-              fontSize: 11,
-              letterSpacing: '0.2em',
-              color: '#ED7F35',
-              marginBottom: 16,
-            }}>
-              AS SEEN ON YOUTUBE & SOCIAL MEDIA
+            <div
+              data-section="socialProof"
+              data-field="sectionLabel"
+              style={{
+                fontSize: 11,
+                letterSpacing: '0.2em',
+                color: '#ED7F35',
+                marginBottom: 16,
+              }}
+            >
+              {content.socialProof.sectionLabel}
             </div>
-            <h2 style={{
-              fontSize: 'clamp(32px, 4vw, 48px)',
-              fontWeight: 300,
-              letterSpacing: '-0.02em',
-              color: '#FDFDFC',
-              marginBottom: 16,
-            }}>
-              Your Questions, <span style={{ color: '#ED7F35' }}>Answered</span>
+            <h2
+              data-section="socialProof"
+              data-field="heading"
+              style={{
+                fontSize: 'clamp(32px, 4vw, 48px)',
+                fontWeight: 300,
+                letterSpacing: '-0.02em',
+                color: '#FDFDFC',
+                marginBottom: 16,
+              }}
+            >
+              {content.socialProof.heading}
             </h2>
-            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', maxWidth: 600, margin: '0 auto' }}>
-              We cover the topics liquor store owners ask about most. Watch our video content and see why retailers trust our expertise.
+            <p
+              data-section="socialProof"
+              data-field="desc"
+              style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', maxWidth: 600, margin: '0 auto' }}
+            >
+              {content.socialProof.desc}
             </p>
           </div>
 
@@ -3218,30 +3313,48 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                 marginBottom: 16,
               }}
             />
-            <p style={{
-              fontSize: 13,
-              color: '#666',
-              maxWidth: 300,
-            }}>
-              Premier digital marketing agency for the retail liquor industry. 10+ years of 3-tier expertise.
+            <p
+              data-section="footer"
+              data-field="bio"
+              style={{
+                fontSize: 13,
+                color: '#666',
+                maxWidth: 300,
+              }}
+            >
+              {content.footer.bio}
             </p>
           </div>
           <div style={{ display: 'flex', gap: 80 }}>
-            <div>
-              <div style={{
-                fontSize: 11,
-                letterSpacing: '0.15em',
-                color: '#666',
-                marginBottom: 16,
-              }}>
-                COMPANY
+            {content.footer.sections.map((section, idx) => (
+              <div key={idx}>
+                <div
+                  data-section="footer"
+                  data-field={`sections.${idx}.label`}
+                  style={{
+                    fontSize: 11,
+                    letterSpacing: '0.15em',
+                    color: '#666',
+                    marginBottom: 16,
+                  }}
+                >
+                  {section.label}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {section.links.map((link, linkIdx) => (
+                    <a
+                      key={linkIdx}
+                      href={link.href}
+                      data-section="footer"
+                      data-field={`sections.${idx}.links.${linkIdx}.label`}
+                      style={{ fontSize: 13, color: '#0A0A0A', cursor: 'pointer', textDecoration: 'none' }}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {['About', 'Case Studies', 'Contact', 'Blog'].map(item => (
-                  <span key={item} style={{ fontSize: 13, color: '#0A0A0A', cursor: 'pointer' }}>{item}</span>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </footer>
