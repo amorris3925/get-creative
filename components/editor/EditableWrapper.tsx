@@ -1,6 +1,7 @@
 'use client';
 
 import { EditModeProvider } from './EditModeContext';
+import { ResponsiveProvider } from './ResponsiveContext';
 import AdminToolbar from './AdminToolbar';
 import GlobalEditableOverlay from './GlobalEditableOverlay';
 
@@ -12,13 +13,15 @@ interface EditableWrapperProps {
 export default function EditableWrapper({ children, isAdmin }: EditableWrapperProps) {
   return (
     <EditModeProvider isAdmin={isAdmin}>
-      {children}
-      {isAdmin && (
-        <>
-          <GlobalEditableOverlay />
-          <AdminToolbar />
-        </>
-      )}
+      <ResponsiveProvider>
+        {children}
+        {isAdmin && (
+          <>
+            <GlobalEditableOverlay />
+            <AdminToolbar />
+          </>
+        )}
+      </ResponsiveProvider>
     </EditModeProvider>
   );
 }

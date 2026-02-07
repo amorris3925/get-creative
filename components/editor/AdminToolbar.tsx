@@ -1,8 +1,10 @@
 'use client';
 
 import { useEditMode } from './EditModeContext';
+import { useResponsive } from './ResponsiveContext';
+import DeviceToggle from './DeviceToggle';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AdminToolbar() {
   const {
@@ -22,6 +24,39 @@ export default function AdminToolbar() {
     fetchHistory,
     rollbackTo,
   } = useEditMode();
+
+  const {
+    hasStyleChanges,
+    saveStyles,
+    discardStyleChanges,
+    isSavingStyles,
+    selectedElement,
+  } = useResponsive();
+
+  const [showSpacingPanel, setShowSpacingPanel] = useState(false);
+
+  // Combined save function
+  const handleSave = async () => {
+    if (hasChanges) {
+      await saveChanges();
+    }
+    if (hasStyleChanges) {
+      await saveStyles();
+    }
+  };
+
+  // Combined discard function
+  const handleDiscard = () => {
+    if (hasChanges) {
+      discardChanges();
+    }
+    if (hasStyleChanges) {
+      discardStyleChanges();
+    }
+  };
+
+  const hasPendingChanges = hasChanges || hasStyleChanges;
+  const isSavingAny = isSaving || isSavingStyles;
 
   // Fetch history when panel opens
   useEffect(() => {
@@ -114,6 +149,14 @@ export default function AdminToolbar() {
             </span>
           </div>
 
+          {/* Device Toggle */}
+          <div style={{
+            paddingRight: 12,
+            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+          }}>
+            <DeviceToggle />
+          </div>
+
           {/* Undo/Redo Buttons */}
           <div style={{
             display: 'flex',
@@ -165,13 +208,40 @@ export default function AdminToolbar() {
             </button>
           </div>
 
+          {/* Spacing Toggle Button */}
+          <button
+            onClick={() => setShowSpacingPanel(!showSpacingPanel)}
+            title="Adjust spacing"
+            style={{
+              padding: '6px 10px',
+              background: showSpacingPanel ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+              border: showSpacingPanel ? '1px solid rgba(34, 197, 94, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 6,
+              color: showSpacingPanel ? '#22C55E' : 'rgba(255, 255, 255, 0.6)',
+              fontSize: 11,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M9 3v18" />
+              <path d="M15 3v18" />
+              <path d="M3 9h18" />
+              <path d="M3 15h18" />
+            </svg>
+            Spacing
+          </button>
+
           {/* Instructions */}
           <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.5)' }}>
-            Click text to edit
+            Click text to edit • Click elements for spacing
           </span>
 
           {/* Pending Changes Indicator */}
-          {hasChanges && (
+          {hasPendingChanges && (
             <div style={{
               padding: '4px 10px',
               background: 'rgba(237, 127, 53, 0.2)',
@@ -225,9 +295,9 @@ export default function AdminToolbar() {
               Full Editor
             </Link>
 
-            {hasChanges && (
+            {hasPendingChanges && (
               <button
-                onClick={discardChanges}
+                onClick={handleDiscard}
                 style={{
                   padding: '8px 14px',
                   background: 'transparent',
@@ -243,20 +313,20 @@ export default function AdminToolbar() {
             )}
 
             <button
-              onClick={saveChanges}
-              disabled={!hasChanges || isSaving}
+              onClick={handleSave}
+              disabled={!hasPendingChanges || isSavingAny}
               style={{
                 padding: '8px 16px',
-                background: hasChanges ? '#ED7F35' : 'rgba(255, 255, 255, 0.1)',
+                background: hasPendingChanges ? '#ED7F35' : 'rgba(255, 255, 255, 0.1)',
                 border: 'none',
                 borderRadius: 8,
-                color: hasChanges ? '#FFFFFF' : 'rgba(255, 255, 255, 0.3)',
+                color: hasPendingChanges ? '#FFFFFF' : 'rgba(255, 255, 255, 0.3)',
                 fontSize: 12,
                 fontWeight: 600,
-                cursor: hasChanges && !isSaving ? 'pointer' : 'not-allowed',
+                cursor: hasPendingChanges && !isSavingAny ? 'pointer' : 'not-allowed',
               }}
             >
-              {isSaving ? 'Saving...' : 'Save'}
+              {isSavingAny ? 'Saving...' : 'Save'}
             </button>
 
             <button
