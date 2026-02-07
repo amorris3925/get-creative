@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { defaultContent } from '@/lib/content/defaults';
+import { verifyAdmin } from '@/lib/admin/auth';
 
 interface InlineChange {
   path: string[];
@@ -9,6 +10,12 @@ interface InlineChange {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify admin access
+    const isAdmin = await verifyAdmin();
+    if (!isAdmin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { sectionKey, changes } = await request.json() as {
       sectionKey: string;
       changes: InlineChange[];
@@ -27,7 +34,8 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    // Use admin client to bypass RLS
+    const supabase = createAdminClient();
 
     // Get existing section data
     const { data: existing } = await supabase
