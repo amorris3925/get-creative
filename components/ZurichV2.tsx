@@ -1,8 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { DefaultContent } from '@/lib/content/defaults';
 
-export default function ZurichV2() {
+interface ZurichV2Props {
+  content: DefaultContent;
+}
+
+export default function ZurichV2({ content }: ZurichV2Props) {
   const [clientType, setClientType] = useState<'retail' | 'enterprise'>('retail');
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   const [yearsCount, setYearsCount] = useState(0);
@@ -18,7 +23,9 @@ export default function ZurichV2() {
   const [ctaWordIndex, setCtaWordIndex] = useState(0);
   const [ctaFading, setCtaFading] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
-  const ctaWords = ['brand', 'chain', 'distribution', 'products'];
+
+  // Use content from CMS or defaults
+  const ctaWords = content.hero.ctaWords;
 
   // Scroll detection for sticky CTA and count animation
   useEffect(() => {
@@ -100,43 +107,11 @@ export default function ZurichV2() {
     return () => clearInterval(interval);
   }, [clientType, ctaWords.length]);
 
-  // Selectable services (user picks 3 of these 5)
-  const selectableServices = [
-    { name: 'Geofencing Ads', desc: 'Precision targeting within 5 miles', immediate: 2.8, longterm: 1.4 },
-    { name: 'Google Ads', desc: 'Search campaigns that convert', immediate: 3.2, longterm: 1.2 },
-    { name: 'Facebook & Instagram Ads', desc: 'Social that drives foot traffic', immediate: 2.4, longterm: 1.8 },
-    { name: 'Email & SMS Marketing', desc: 'Direct customer engagement', immediate: 2.6, longterm: 2.8 },
-    { name: 'Organic Social (FB/IG)', desc: 'Content & community building', immediate: 1.4, longterm: 2.6 },
-  ];
-
-  // Always-included services (locked in, cannot deselect)
-  const lockedServices = [
-    { name: 'Dedicated Customer Success Manager', desc: 'Your strategic partner', immediate: 1.2, longterm: 1.8 },
-    { name: 'Bev-Alc Specialized Staff', desc: 'Access to entire team', immediate: 1.0, longterm: 1.5 },
-    { name: 'Customer Dashboard', desc: 'State-of-the-art reporting', immediate: 0.8, longterm: 1.2 },
-    { name: 'Foot Traffic & Online Insights', desc: 'State, regional & national data exclusive to partners', immediate: 2.0, longterm: 2.8 },
-    { name: 'Google Platform Suite', desc: 'Business Profile, Search Console, Merchant Center', immediate: 1.8, longterm: 2.5 },
-    { name: 'Website Optimization', desc: 'Ongoing optimization & seasonal changes', immediate: 1.5, longterm: 2.2 },
-  ];
-
-  // Combined for ROI calculation
+  // Services data from CMS
+  const selectableServices = content.services.selectableServices;
+  const lockedServices = content.services.lockedServices;
   const allServices = [...selectableServices, ...lockedServices];
-
-  // Services array for other sections (backwards compatibility)
-  const services = [
-    { name: 'Geofencing Ads', desc: 'Precision targeting within 5 miles' },
-    { name: 'Google Ads', desc: 'Search campaigns that convert' },
-    { name: 'Facebook & Instagram Ads', desc: 'Social that drives foot traffic' },
-    { name: 'Website Optimization', desc: 'Ongoing optimization & seasonal changes' },
-    { name: 'Google Platform Suite', desc: 'Business Profile, Search Console, Merchant Center' },
-    { name: 'SEO', desc: 'Dominate local search' },
-    { name: 'Email & SMS Marketing', desc: 'Direct customer engagement' },
-    { name: 'Organic Social', desc: 'Content & community building' },
-    { name: 'Brand Development & Rebranding', desc: 'Build a brand that commands loyalty and premium positioning' },
-    { name: 'Store Openings & Launches', desc: 'Full-service marketing for new locations and grand openings' },
-    { name: 'Go-To-Market Strategy', desc: 'Strategic market entry plans that build sustainable growth' },
-    { name: 'Strategic Growth Advisory', desc: 'Long-term partnership for expansion and market dominance' },
-  ];
+  const services = content.services.allServices;
 
   // Calculate ROI with sparkline data for all timeframes
   // Immediate = trackable first-time customers from ad spend
@@ -201,136 +176,13 @@ export default function ZurichV2() {
     });
   };
 
-  // Pricing tiers with expanded details
-  const pricingTiers = [
-    {
-      name: 'White Glove',
-      price: 3000,
-      onboarding: 1500,
-      services: 5,
-      tagline: 'PROVEN EXCELLENCE',
-      desc: 'Gain access to the exact strategies and marketing playbooks that power the top 0.1% of liquor stores nationwide.',
-      keyDiff: 'Elite Store Strategies',
-      keyDiffDetail: 'Proven tactics from top-performing stores',
-      features: ['Strategies from America\'s top liquor stores', 'Dedicated Customer Success Manager', 'Monthly strategy sessions', 'Real-time performance dashboard', 'Aggregated insights from 107 stores'],
-      expandedFeatures: ['Dedicated Slack channel', 'Monthly performance reports', 'Quarterly strategy reviews', 'Access to creative templates', 'Priority email support'],
-      bestFor: 'Single locations & small chains',
-      commitment: '6 months',
-      best: false,
-    },
-    {
-      name: 'Growth Partner',
-      price: 5000,
-      onboarding: 3000,
-      services: 7,
-      tagline: 'FOUNDER-LED GROWTH',
-      desc: 'Monthly strategy sessions with our founder plus full access to our executive production, sales, and fulfillment teams.',
-      keyDiff: 'Founder + Full Executive Team',
-      keyDiffDetail: 'Direct access to leadership & operations',
-      features: ['Monthly founder strategy sessions', 'Full executive team collaboration', 'Production team support', 'Sales & fulfillment coordination', 'Custom growth roadmap'],
-      expandedFeatures: ['Chain competition monitoring', 'Rebranding consultation', 'Long-term growth roadmap', 'Custom analytics dashboards', 'Quarterly business reviews', 'Priority implementation'],
-      bestFor: 'Growing chains & ambitious retailers',
-      commitment: '6 months',
-      best: true,
-    },
-    {
-      name: 'Strategic Advisory',
-      price: 8000,
-      onboarding: 5000,
-      services: 7,
-      tagline: 'EXECUTIVE PARTNERSHIP',
-      desc: 'Your dedicated account manager (no shared clients), two hours monthly with our founder, plus deep market intelligence.',
-      keyDiff: 'Dedicated AM + 2hr Founder Monthly',
-      keyDiffDetail: 'Exclusive attention & market intelligence',
-      features: ['Dedicated Account Manager (you\'re their only client)', '2x 1-hour founder sessions per month', 'Deep foot traffic & market insights', 'Competitor tracking & analysis', 'Executive-ready presentations'],
-      expandedFeatures: ['Board/investor presentation support', 'M&A due diligence support', 'National expansion strategy', 'Vendor negotiation support', 'Crisis management', 'Direct founder mobile access'],
-      bestFor: 'Regional chains & market leaders',
-      commitment: '6 months',
-      best: false,
-    },
-  ];
-
-  const caseStudies = [
-    { metric: '+312%', label: 'ROI', client: 'Regional Chain (14 Locations)', desc: 'Comprehensive digital strategy combining geofencing with SEO optimization' },
-    { metric: '+47%', label: 'Foot Traffic', client: 'Urban Wine Shop', desc: 'Precision geofencing during off-peak hours drove measurable in-store visits' },
-    { metric: '+89%', label: 'Online Orders', client: 'Suburban Liquor Store', desc: 'City Hive optimization combined with Google Ads campaign' },
-  ];
-
-  const testimonials = [
-    { quote: 'They understand liquor retail like no other agency. Our ROI tripled in 6 months.', name: 'Owner', location: 'Multi-Location Chain, Texas' },
-    { quote: 'Finally, an agency that speaks our language. The 3-tier expertise is real.', name: 'Marketing Director', location: 'Regional Distributor, California' },
-    { quote: 'LiquorChat alone paid for the entire engagement. Game changer.', name: 'Owner', location: 'Independent Wine Shop, NYC' },
-  ];
-
-  const clientTypes = [
-    { name: 'Independent Liquor Stores', count: '47' },
-    { name: 'Regional Chains', count: '23' },
-    { name: 'Wine & Spirits Shops', count: '31' },
-    { name: 'Craft Beverage Retailers', count: '15' },
-  ];
-
-  // Enterprise/Chain Services
-  const enterpriseServices = [
-    {
-      title: 'Custom GTM Strategy',
-      desc: 'Tailored go-to-market strategies built for your specific market, audience, and growth objectives.',
-      icon: '01',
-      for: 'All Enterprise Clients',
-    },
-    {
-      title: 'Centralized Campaign Management',
-      desc: 'Whether 1 location or 500+, everything is managed centrally with localized execution and unified brand voice.',
-      icon: '02',
-      for: 'Regional & National Chains',
-    },
-    {
-      title: 'Dedicated Account Executive',
-      desc: 'Your dedicated account executive works alongside Alden Morris to ensure strategic alignment at every level.',
-      icon: '03',
-      for: 'All Enterprise Clients',
-    },
-    {
-      title: 'Brand Strategy & Positioning',
-      desc: 'Define your market position and craft messaging that resonates across all 3 tiers of the beverage industry.',
-      icon: '04',
-      for: 'Producers, Distributors, Chains',
-    },
-    {
-      title: 'Creative & Graphics',
-      desc: 'Full-service creative team delivering campaigns, social content, print materials, and brand assets at scale.',
-      icon: '05',
-      for: 'All Enterprise Clients',
-    },
-    {
-      title: 'Distributor Marketing',
-      desc: 'B2B campaigns to strengthen retailer relationships, drive reorders, and expand distribution footprint.',
-      icon: '06',
-      for: 'Wholesale & Distribution',
-    },
-  ];
-
-  const growthPartnerPoints = [
-    {
-      title: 'We Think Like Owners',
-      desc: 'Most agencies treat you like a task list. We think about your business as if it were ours—analyzing margins, understanding seasonality, and optimizing for real profit, not vanity metrics.',
-      icon: '01',
-    },
-    {
-      title: 'Strategy Before Tactics',
-      desc: 'We don\'t just run ads. We build comprehensive growth systems that compound over time. Every campaign connects to a larger strategic framework designed for long-term dominance.',
-      icon: '02',
-    },
-    {
-      title: 'Data-Obsessed Decisions',
-      desc: 'Every recommendation is backed by proprietary data from 107 liquor retailers. We know what works because we\'ve tested it across diverse markets, store sizes, and demographics.',
-      icon: '03',
-    },
-    {
-      title: 'Skin in the Game',
-      desc: 'We built LiquorChat—a SaaS product with 3 patents pending. We\'re not just advisors, we\'re operators who understand the daily challenges of running a beverage retail business.',
-      icon: '04',
-    },
-  ];
+  // Data from CMS
+  const pricingTiers = content.pricing.tiers;
+  const caseStudies = content.caseStudies;
+  const testimonials = content.testimonials;
+  const clientTypes = content.clientTypes;
+  const enterpriseServices = content.enterpriseServices;
+  const growthPartnerPoints = content.growthPartnerPoints;
 
   return (
     <div style={{
