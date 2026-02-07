@@ -44,11 +44,13 @@ export function validateAdminPassword(password: string): string | null {
 }
 
 // Cookie configuration for admin session
+// Note: secure is false for sslip.io (HTTP) deployment
+// Set COOKIE_SECURE=true when using HTTPS domain
 export const ADMIN_COOKIE_CONFIG = {
   name: ADMIN_COOKIE_NAME,
   options: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.COOKIE_SECURE === 'true',
     sameSite: 'lax' as const,
     maxAge: SESSION_DURATION / 1000, // Convert to seconds
     path: '/',
