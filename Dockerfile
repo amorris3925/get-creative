@@ -6,9 +6,12 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install ALL dependencies (including devDeps for build)
+# Ensure devDependencies are installed
+ENV NODE_ENV=development
+
+# Install ALL dependencies (including devDeps for TypeScript build)
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 # Copy source and build
 COPY . .
