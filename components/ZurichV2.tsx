@@ -634,8 +634,16 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               marginBottom: 32,
             }}>
               {clientType === 'retail'
-                ? <><span style={{ color: '#ED7F35' }}>Alcohol retail</span> marketing agency</>
-                : <>Enterprise <span style={{ color: '#ED7F35' }}>beverage marketing</span> at scale</>
+                ? <>
+                    <span data-section="hero" data-field="retailHeadline.prefix">{content.hero.retailHeadline.prefix}</span>
+                    <span style={{ color: '#ED7F35' }} data-section="hero" data-field="retailHeadline.highlight">{content.hero.retailHeadline.highlight}</span>
+                    <span data-section="hero" data-field="retailHeadline.suffix">{content.hero.retailHeadline.suffix}</span>
+                  </>
+                : <>
+                    <span data-section="hero" data-field="enterpriseHeadline.prefix">{content.hero.enterpriseHeadline.prefix}</span>
+                    <span style={{ color: '#ED7F35' }} data-section="hero" data-field="enterpriseHeadline.highlight">{content.hero.enterpriseHeadline.highlight}</span>
+                    <span data-section="hero" data-field="enterpriseHeadline.suffix">{content.hero.enterpriseHeadline.suffix}</span>
+                  </>
               }
             </h1>
             <p className="hero-animate hero-animate-delay-3" style={{
@@ -644,10 +652,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               color: '#555',
               maxWidth: 520,
               marginBottom: 40,
-            }}>
+            }} data-section="hero" data-field={clientType === 'retail' ? 'retailDescription' : 'enterpriseDescription'}>
               {clientType === 'retail'
-                ? 'We help independent liquor stores and regional chains compete with big-box retailers through data-driven digital marketing built exclusively for the alcoholic beverage industry.'
-                : 'From Anheuser-Busch to regional distributors, we provide enterprise-grade marketing for breweries, distilleries, wineries, and beverage corporations.'
+                ? content.hero.retailDescription
+                : content.hero.enterpriseDescription
               }
             </p>
 
@@ -659,8 +667,8 @@ export default function ZurichV2({ content }: ZurichV2Props) {
               flexWrap: 'wrap',
             }}>
               {(clientType === 'retail'
-                ? ['Liquor Stores', 'Wine Shops', 'Beer Retailers', 'Regional Chains']
-                : ['Breweries', 'Distilleries', 'Wineries', 'Distributors', 'Beverage Corps']
+                ? content.hero.retailClientTypes
+                : content.hero.enterpriseClientTypes
               ).map((type, i) => (
                 <span key={i} style={{
                   fontSize: 12,
@@ -671,7 +679,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
                   border: '1px solid rgba(237, 127, 53, 0.15)',
                   borderRadius: 100,
                   color: '#0A0A0A',
-                }}>
+                }}
+                data-section="hero"
+                data-field={`${clientType === 'retail' ? 'retailClientTypes' : 'enterpriseClientTypes'}.${i}`}
+              >
                   {type}
               </span>
               ))}
