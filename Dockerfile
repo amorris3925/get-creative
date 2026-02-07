@@ -1,31 +1,22 @@
 # syntax=docker/dockerfile:1
 
 # ==========================================
-# Stage 1: Dependencies
-# ==========================================
-FROM node:20-alpine AS deps
-WORKDIR /app
-
-# Install dependencies only when needed
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
-
-# ==========================================
-# Stage 2: Builder
+# Stage 1: Builder
 # ==========================================
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+# Install ALL dependencies (including devDeps for build)
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Build the Next.js application
+# Copy source and build
+COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # ==========================================
-# Stage 3: Runner (Production)
+# Stage 2: Runner (Production)
 # ==========================================
 FROM node:20-alpine AS runner
 WORKDIR /app
