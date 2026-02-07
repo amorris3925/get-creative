@@ -27,44 +27,31 @@ export async function verifyAdmin(): Promise<boolean> {
   }
 }
 
-// Login and create session
-export async function adminLogin(password: string): Promise<boolean> {
+// Validate password and return session token if valid
+export function validateAdminPassword(password: string): string | null {
   const adminPassword = process.env.ADMIN_PASSWORD;
 
   if (!adminPassword) {
     console.error('ADMIN_PASSWORD not configured');
-    return false;
+    return null;
   }
 
   if (password !== adminPassword) {
-    return false;
+    return null;
   }
 
-  try {
-    const cookieStore = await cookies();
-    const sessionToken = hashPassword(adminPassword);
-
-    cookieStore.set(ADMIN_COOKIE_NAME, sessionToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: SESSION_DURATION / 1000, // Convert to seconds
-      path: '/',
-    });
-
-    return true;
-  } catch (err) {
-    console.error('Failed to set admin cookie:', err);
-    return false;
-  }
+  return hashPassword(adminPassword);
 }
 
-// Logout and clear session
-export async function adminLogout(): Promise<void> {
-  try {
-    const cookieStore = await cookies();
-    cookieStore.delete(ADMIN_COOKIE_NAME);
-  } catch (err) {
-    console.error('Failed to clear admin cookie:', err);
-  }
-}
+// Cookie configuration for admin session
+export const ADMIN_COOKIE_CONFIG = {
+  name: ADMIN_COOKIE_NAME,
+  options: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax' as const,
+    maxAge: SESSION_DURATION / 1000, // Convert to seconds
+    path: '/',
+  },
+};
+
