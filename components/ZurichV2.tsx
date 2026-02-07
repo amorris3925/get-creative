@@ -488,15 +488,18 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </div>
 
       {/* Hero Section */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: '140px 64px 80px',
-        position: 'relative',
-        zIndex: 1,
-      }}>
+      <section
+        data-element="hero.container"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '140px 64px 80px',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -765,15 +768,19 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* Case Studies Section - With Videos */}
-      <section id="results-section" style={{
-        padding: '120px 64px',
-        position: 'relative',
-        zIndex: 1,
-        background: clientType === 'retail'
-          ? 'linear-gradient(180deg, rgba(237, 127, 53, 0.03) 0%, #FDFDFC 100%)'
-          : 'linear-gradient(180deg, rgba(139, 36, 199, 0.05) 0%, #FDFDFC 100%)',
-        transition: 'background 0.3s ease',
-      }}>
+      <section
+        id="results-section"
+        data-element="caseStudies.container"
+        style={{
+          padding: '120px 64px',
+          position: 'relative',
+          zIndex: 1,
+          background: clientType === 'retail'
+            ? 'linear-gradient(180deg, rgba(237, 127, 53, 0.03) 0%, #FDFDFC 100%)'
+            : 'linear-gradient(180deg, rgba(139, 36, 199, 0.05) 0%, #FDFDFC 100%)',
+          transition: 'background 0.3s ease',
+        }}
+      >
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
           <div className="reveal" style={{
             fontSize: 11,
@@ -1284,7 +1291,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* Massive Stats Section - Full Width */}
-      <section style={{
+      <section
+        data-element="stats"
+        style={{
         position: 'relative',
         zIndex: 1,
         padding: '80px 0',
@@ -1380,7 +1389,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
 
       {/* Services Section - Only show for Retail */}
       {clientType === 'retail' && (
-      <section id="services-section" style={{
+      <section
+        id="services-section"
+        data-element="services"
+        style={{
         padding: '120px 64px 60px',
         background: '#0A0A0A',
         position: 'relative',
@@ -1463,7 +1475,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       )}
 
       {/* Technology Section - LiquorChat */}
-      <section style={{
+      <section
+        data-element="liquorchat"
+        style={{
         padding: '80px 64px 120px',
         background: 'linear-gradient(135deg, #0A0A0A 0%, #1a1a1a 100%)',
         position: 'relative',
@@ -1655,7 +1669,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* ROI Calculator + Pricing Section - Combined */}
-      <section style={{
+      <section
+        data-element="pricing"
+        style={{
         padding: '100px 64px',
         background: 'linear-gradient(180deg, #FAFAF8 0%, #FDFDFC 100%)',
         position: 'relative',
@@ -2432,7 +2448,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* Growth Partner Comparison - Typical Agency vs IC */}
-      <section style={{
+      <section
+        data-element="comparison"
+        style={{
         padding: '120px 64px',
         background: 'linear-gradient(135deg, #0A0A0A 0%, #1A1410 100%)',
         position: 'relative',
@@ -2703,7 +2721,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* About Alden Section - Direct Access Emphasis */}
-      <section id="about-section" style={{
+      <section
+        id="about-section"
+        data-element="about"
+        style={{
         padding: '120px 64px',
         position: 'relative',
         zIndex: 1,
@@ -2983,7 +3004,10 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       </section>
 
       {/* CTA Section */}
-      <section id="contact-section" style={{
+      <section
+        id="contact-section"
+        data-element="contact"
+        style={{
         padding: '120px 64px',
         position: 'relative',
         zIndex: 1,
@@ -3122,7 +3146,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
 
       {/* YouTube Social Proof Section - As Seen On */}
       {clientType === 'retail' && (
-      <section style={{
+      <section
+        data-element="social-proof"
+        style={{
         padding: '120px 64px',
         background: 'linear-gradient(180deg, #0A0A0A 0%, #1A1A1A 100%)',
         position: 'relative',
@@ -3289,7 +3315,9 @@ export default function ZurichV2({ content }: ZurichV2Props) {
       )}
 
       {/* Footer */}
-      <footer style={{
+      <footer
+        data-element="footer"
+        style={{
         padding: '80px 64px',
         borderTop: '1px solid rgba(10, 10, 10, 0.1)',
         position: 'relative',
